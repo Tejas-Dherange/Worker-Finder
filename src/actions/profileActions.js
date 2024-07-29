@@ -9,7 +9,6 @@ export async function createProfile(profileData) {
   await dbConnect();
 
   const session = await getServerSession(authOptions);
-  console.log(session);
 
   if (!session) {
     return null;
@@ -26,4 +25,23 @@ export async function createProfile(profileData) {
   // Retrieve the saved profile using a query and lean()
   const result = await Profile.findById(newProfile._id).lean();
   return result;
+}
+
+export async function getProfileInfo() {
+  await dbConnect();
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return null;
+  }
+
+  const profile = await Profile.findOne({
+    userEmail: session?.user?.email,
+  }).lean();
+
+  if (profile) {
+    return profile;
+  } else {
+    return false;
+  }
 }

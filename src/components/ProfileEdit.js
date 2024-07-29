@@ -13,7 +13,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { getUserInfo } from "@/actions/getUserInfo";
 import { createProfile } from "@/actions/profileActions";
