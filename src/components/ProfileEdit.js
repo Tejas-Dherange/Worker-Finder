@@ -16,18 +16,18 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { getUserInfo } from "@/actions/getUserInfo";
+import { createProfile } from "@/actions/profileActions";
 
 export default function ProfileEdit({ user }) {
   const [userData, setUserData] = useState(null);
   const [profilePic, setProfilePic] = useState("");
-  console.log(user?.email);
+  // console.log(user?.email);
   const [profile, setProfile] = useState({
     name: "Ram",
     profilePic: "",
     profession: "Photographer",
     bio: "",
     location: "Jorpati",
-    userEmail: user?.email,
     phoneNo: "",
     whatsApp: "",
     facebook: "",
@@ -35,6 +35,11 @@ export default function ProfileEdit({ user }) {
     twitter: "@ram",
     linkedin: "linkedin.com/in/ram",
   });
+
+  async function postUserProfile() {
+    const profileInfo = await createProfile(profile);
+    console.log(profileInfo);
+  }
 
   useEffect(() => {
     async function getUser() {
@@ -192,7 +197,7 @@ export default function ProfileEdit({ user }) {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="ml-auto" onClick={handleSubmit}>
+            <Button className="ml-auto" onClick={postUserProfile}>
               Save Changes
             </Button>
           </CardFooter>
