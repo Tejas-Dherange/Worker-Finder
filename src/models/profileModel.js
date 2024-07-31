@@ -9,6 +9,13 @@ const profileSchema = new mongoose.Schema({
   profession: { type: String, required: true },
   location: { type: String, required: true },
   phoneNo: { type: String, required: true },
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "reviews",
+    },
+  ],
+  rating: { type: Number },
   profilePic: String,
   facebook: String,
   whatsApp: String,

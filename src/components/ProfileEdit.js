@@ -16,24 +16,12 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { getUserInfo } from "@/actions/getUserInfo";
 import { createProfile } from "@/actions/profileActions";
+import ProfileEditInputs from "./ProfileEditInputs";
 
-export default function ProfileEdit({ user }) {
+export default function ProfileEdit({ user, profile, setProfile }) {
   const [userData, setUserData] = useState(null);
   const [profilePic, setProfilePic] = useState("");
   // console.log(user?.email);
-  const [profile, setProfile] = useState({
-    name: "Ram",
-    profilePic: "",
-    profession: "Photographer",
-    bio: "",
-    location: "Jorpati",
-    phoneNo: "",
-    whatsApp: "",
-    facebook: "",
-    email: "",
-    twitter: "@ram",
-    linkedin: "linkedin.com/in/ram",
-  });
 
   async function postUserProfile() {
     const profileInfo = await createProfile(profile);
@@ -56,13 +44,23 @@ export default function ProfileEdit({ user }) {
     }));
   };
 
+  const fields = [
+    { id: "location", placeholder: "Enter your location" },
+    { id: "phoneNo", placeholder: "Enter your phone number" },
+    { id: "whatsApp", placeholder: "Enter your WhatsApp" },
+    { id: "facebook", placeholder: "Enter your Facebook" },
+    { id: "email", placeholder: "Enter your Email" },
+    { id: "twitter", placeholder: "Enter your Twitter handle" },
+    { id: "linkedin", placeholder: "Enter your LinkedIn profile" },
+  ];
+
   const handleSubmit = () => {
     // Handle the save changes logic here
     console.log("Profile data saved:", profile);
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40 mx-auto max-w-[800px] mt-5">
+    <>
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 pt-4">
         <div className="grid gap-4">
           <div className="grid gap-2">
@@ -128,71 +126,15 @@ export default function ProfileEdit({ user }) {
               />
             </div>
             <div className="grid gap-3 sm:grid-cols-2 sm:gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="location">Location</Label>
-                <Input
-                  id="location"
-                  value={profile.location}
+              {fields.map(({ id, placeholder }) => (
+                <ProfileEditInputs
+                  key={id}
+                  id={id}
+                  value={profile[id]}
                   onChange={handleChange}
-                  placeholder="Enter your location"
+                  placeholder={placeholder}
                 />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="phoneNo">Phone No</Label>
-                <Input
-                  id="phoneNo"
-                  value={profile.phoneNo}
-                  onChange={handleChange}
-                  placeholder="Enter your phone number"
-                />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="whatsApp">Whats App</Label>
-                <Input
-                  id="whatsApp"
-                  value={profile.whatsApp}
-                  onChange={handleChange}
-                  placeholder="Enter your WhatsApp"
-                />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="facebook">Facebook</Label>
-                <Input
-                  id="facebook"
-                  value={profile.facebook}
-                  onChange={handleChange}
-                  placeholder="Enter your Facebook"
-                />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  value={profile.email}
-                  onChange={handleChange}
-                  placeholder="Enter your Email"
-                />
-              </div>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2 sm:gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="twitter">Twitter</Label>
-                <Input
-                  id="twitter"
-                  value={profile.twitter}
-                  onChange={handleChange}
-                  placeholder="Enter your Twitter handle"
-                />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="linkedin">LinkedIn</Label>
-                <Input
-                  id="linkedin"
-                  value={profile.linkedin}
-                  onChange={handleChange}
-                  placeholder="Enter your LinkedIn profile"
-                />
-              </div>
+              ))}
             </div>
           </CardContent>
           <CardFooter>
@@ -202,7 +144,7 @@ export default function ProfileEdit({ user }) {
           </CardFooter>
         </Card>
       </main>
-    </div>
+    </>
   );
 }
 
