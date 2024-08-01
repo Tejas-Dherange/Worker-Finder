@@ -25,11 +25,12 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: false,
+    required: true,
   },
   isVerfied: {
     type: Boolean,
     default: false,
+    required: false,
   },
   forgotPasswordToken: String,
   forgotPasswordTokenExpiry: Date,

@@ -35,7 +35,7 @@ export default function page() {
       const res = await signIn("credentials", {
         email: user.email,
         password: user.password,
-        redirect: false,
+        redirect: true,
       });
 
       if (res?.error) {

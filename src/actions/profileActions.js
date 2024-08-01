@@ -27,6 +27,31 @@ export async function createProfile(profileData) {
   return result;
 }
 
+export async function updateProfile(newProfileData) {
+  await dbConnect();
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return null;
+  }
+  const profileWithUserEmail = {
+    ...newProfileData,
+    userEmail: session?.user?.email,
+  };
+
+  const updatedProfile = await Profile.findOneAndUpdate(
+    {
+      userEmail: session?.user?.email,
+    },
+    profileWithUserEmail,
+    {
+      new: true,
+    }
+  ).lean();
+
+  return updatedProfile;
+}
+
 export async function getProfileInfo() {
   await dbConnect();
   const session = await getServerSession(authOptions);

@@ -4,9 +4,13 @@ import ProfileEdit from "@/components/ProfileEdit";
 import ProfileStatic from "@/components/ProfileStatic";
 import ToggleButton from "@/components/ToggleButton";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 import React, { useEffect, useState } from "react";
 
 export default function profile() {
+  const user = useSession();
+
   const [editMode, setEditMode] = useState(false);
   const [profile, setProfile] = useState({
     name: "Your name",
@@ -35,7 +39,6 @@ export default function profile() {
     linkedin: "",
   });
 
-  const user = useSession();
   useEffect(() => {
     async function getProfile() {
       const result = await getProfileInfo();
@@ -69,7 +72,7 @@ export default function profile() {
             setProfile={setProfile}
           />
         ) : (
-          <ProfileStatic profile={profileStatic} />
+          <ProfileStatic profile={profileStatic} user={user} />
         )}
       </div>
     </>

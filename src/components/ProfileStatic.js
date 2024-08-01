@@ -10,8 +10,9 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { redirect } from "next/dist/server/api-utils";
 
-export default function ProfileStatic({ profile }) {
+export default function ProfileStatic({ profile, user }) {
   const fields = [
     "Location",
     "Phone No",

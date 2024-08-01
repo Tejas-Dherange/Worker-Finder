@@ -1,7 +1,56 @@
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import ProfileCard from "@/components/ProfileCard";
 
 export default function Component() {
+  const profiles = [
+    {
+      name: "John Doe",
+      profession: "Software Engineer",
+      location: "San Francisco, CA",
+      avatarFallback: "JD",
+    },
+    {
+      name: "Jane Smith",
+      profession: "Product Designer",
+      location: "New York, NY",
+      avatarFallback: "JS",
+    },
+    {
+      name: "Michael Johnson",
+      profession: "Marketing Manager",
+      location: "Chicago, IL",
+      avatarFallback: "MJ",
+    },
+    {
+      name: "Sarah Anderson",
+      profession: "Data Analyst",
+      location: "Seattle, WA",
+      avatarFallback: "SA",
+    },
+    {
+      name: "Robert Davis",
+      profession: "Project Manager",
+      location: "Miami, FL",
+      avatarFallback: "RD",
+    },
+    {
+      name: "Emily Wilson",
+      profession: "UI/UX Designer",
+      location: "Boston, MA",
+      avatarFallback: "EW",
+    },
+    {
+      name: "James Lee",
+      profession: "Software Developer",
+      location: "Los Angeles, CA",
+      avatarFallback: "JL",
+    },
+    {
+      name: "Karen Simmons",
+      profession: "Business Analyst",
+      location: "Houston, TX",
+      avatarFallback: "KS",
+    },
+  ];
   return (
     <section className="container px-4 md:px-6 py-12 md:py-16">
       <div className="grid gap-8">
@@ -19,112 +68,9 @@ export default function Component() {
           </div> */}
         </div>
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          <div className="flex items-center gap-4">
-            <Avatar className="w-16 h-16">
-              <AvatarImage src="/placeholder-user.jpg" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <div className="grid gap-1">
-              <div className="text-lg font-medium">John Doe</div>
-              <div className="text-sm text-muted-foreground">
-                Software Engineer
-              </div>
-              <div className="text-sm text-muted-foreground">
-                San Francisco, CA
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <Avatar className="w-16 h-16">
-              <AvatarImage src="/placeholder-user.jpg" />
-              <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
-            <div className="grid gap-1">
-              <div className="text-lg font-medium">Jane Smith</div>
-              <div className="text-sm text-muted-foreground">
-                Product Designer
-              </div>
-              <div className="text-sm text-muted-foreground">New York, NY</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <Avatar className="w-16 h-16">
-              <AvatarImage src="/placeholder-user.jpg" />
-              <AvatarFallback>MS</AvatarFallback>
-            </Avatar>
-            <div className="grid gap-1">
-              <div className="text-lg font-medium">Michael Johnson</div>
-              <div className="text-sm text-muted-foreground">
-                Marketing Manager
-              </div>
-              <div className="text-sm text-muted-foreground">Chicago, IL</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <Avatar className="w-16 h-16">
-              <AvatarImage src="/placeholder-user.jpg" />
-              <AvatarFallback>SA</AvatarFallback>
-            </Avatar>
-            <div className="grid gap-1">
-              <div className="text-lg font-medium">Sarah Anderson</div>
-              <div className="text-sm text-muted-foreground">Data Analyst</div>
-              <div className="text-sm text-muted-foreground">Seattle, WA</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <Avatar className="w-16 h-16">
-              <AvatarImage src="/placeholder-user.jpg" />
-              <AvatarFallback>RD</AvatarFallback>
-            </Avatar>
-            <div className="grid gap-1">
-              <div className="text-lg font-medium">Robert Davis</div>
-              <div className="text-sm text-muted-foreground">
-                Project Manager
-              </div>
-              <div className="text-sm text-muted-foreground">Miami, FL</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <Avatar className="w-16 h-16">
-              <AvatarImage src="/placeholder-user.jpg" />
-              <AvatarFallback>EW</AvatarFallback>
-            </Avatar>
-            <div className="grid gap-1">
-              <div className="text-lg font-medium">Emily Wilson</div>
-              <div className="text-sm text-muted-foreground">
-                UI/UX Designer
-              </div>
-              <div className="text-sm text-muted-foreground">Boston, MA</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <Avatar className="w-16 h-16">
-              <AvatarImage src="/placeholder-user.jpg" />
-              <AvatarFallback>JL</AvatarFallback>
-            </Avatar>
-            <div className="grid gap-1">
-              <div className="text-lg font-medium">James Lee</div>
-              <div className="text-sm text-muted-foreground">
-                Software Developer
-              </div>
-              <div className="text-sm text-muted-foreground">
-                Los Angeles, CA
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <Avatar className="w-16 h-16">
-              <AvatarImage src="/placeholder-user.jpg" />
-              <AvatarFallback>KS</AvatarFallback>
-            </Avatar>
-            <div className="grid gap-1">
-              <div className="text-lg font-medium">Karen Simmons</div>
-              <div className="text-sm text-muted-foreground">
-                Business Analyst
-              </div>
-              <div className="text-sm text-muted-foreground">Houston, TX</div>
-            </div>
-          </div>
+          {profiles.map((profile, index) => (
+            <ProfileCard key={index} {...profile} />
+          ))}
         </div>
       </div>
     </section>
