@@ -15,26 +15,42 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { getUserInfo } from "@/actions/getUserInfo";
-import { createProfile } from "@/actions/profileActions";
+import { createProfile, updateProfile } from "@/actions/profileActions";
 import ProfileEditInputs from "./ProfileEditInputs";
 
-export default function ProfileEdit({ user, profile, setProfile }) {
+export default function ProfileEdit({
+  user,
+  profile,
+  setProfile,
+  profileExist,
+  setProfileStatic,
+  setEditMode,
+}) {
   const [userData, setUserData] = useState(null);
   const [profilePic, setProfilePic] = useState("");
   // console.log(user?.email);
 
-  async function postUserProfile() {
-    const profileInfo = await createProfile(profile);
-    console.log(profileInfo);
+  async function saveChanges() {
+    if (profileExist) {
+      const profileInfo = await updateProfile(profile);
+      console.log(profileInfo);
+      setProfileStatic(profileInfo);
+      setEditMode(false);
+    } else {
+      const profileInfo = await createProfile(profile);
+      console.log(profileInfo);
+      setProfileStatic(profileInfo);
+      setEditMode(false);
+    }
   }
 
-  useEffect(() => {
-    async function getUser() {
-      const userInfo = await getUserInfo();
-      // console.log(userInfo);
-    }
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   async function getUser() {
+  //     const userInfo = await getUserInfo();
+  //     // console.log(userInfo);
+  //   }
+  //   getUser();
+  // }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -138,7 +154,7 @@ export default function ProfileEdit({ user, profile, setProfile }) {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="ml-auto" onClick={postUserProfile}>
+            <Button className="ml-auto" onClick={saveChanges}>
               Save Changes
             </Button>
           </CardFooter>

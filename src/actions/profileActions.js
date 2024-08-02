@@ -70,3 +70,49 @@ export async function getProfileInfo() {
     return false;
   }
 }
+export async function getProfileInfoViewPage(profileId) {
+  await dbConnect();
+
+  const profile = await Profile.findById(profileId).lean();
+
+  return profile;
+}
+
+export async function searchProfileList(encodedProfession, encodedLocation) {
+  await dbConnect();
+
+  const profession = decodeURIComponent(encodedProfession);
+  const location = decodeURIComponent(encodedLocation);
+
+  let profiles = [];
+  if (profession && location) {
+    profiles = await Profile.aggregate([
+      {
+        $match: {
+          $and: [
+            { profession: { $regex: profession, $options: "i" } },
+            { location: { $regex: location, $options: "i" } },
+          ],
+        },
+      },
+    ]);
+  } else if (profession) {
+    profiles = await Profile.aggregate([
+      {
+        $match: {
+          profession: { $regex: profession, $options: "i" },
+        },
+      },
+    ]);
+  } else {
+    profiles = await Profile.aggregate([
+      {
+        $match: {
+          location: { $regex: location, $options: "i" },
+        },
+      },
+    ]);
+  }
+
+  return profiles;
+}

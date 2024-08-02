@@ -1,6 +1,6 @@
 import ProfileCard from "@/components/ProfileCard";
 
-export default function Component() {
+export default function page() {
   const profiles = [
     {
       name: "John Doe",

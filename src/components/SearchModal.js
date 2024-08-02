@@ -11,10 +11,20 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SearchModal() {
+  const [profession, setProfession] = useState("");
+  const [location, setLocation] = useState("");
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  function onSearch() {
+    router.push(`/listing/${profession}/${location}`);
+    setOpen(false);
+  }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="ml-6">
           {" "}
@@ -48,8 +58,11 @@ export default function SearchModal() {
             </Label>
             <Input
               id="profession"
-              defaultValue="electrician"
+              placeholder="e.g electrician"
               className="col-span-3"
+              type="text"
+              value={profession}
+              onChange={(e) => setProfession(e.target.value)}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -58,13 +71,18 @@ export default function SearchModal() {
             </Label>
             <Input
               id="location"
-              defaultValue="@peduarte"
               className="col-span-3"
+              placeholder="e.g jorpati"
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Search</Button>
+          <Button type="submit" onClick={onSearch}>
+            Search
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 
 export default function profile() {
   const user = useSession();
-
+  const [profileExist, setProfileExist] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [profile, setProfile] = useState({
     name: "Your name",
@@ -46,6 +46,7 @@ export default function profile() {
         setProfile(result);
         setProfileStatic(result);
       } else {
+        setProfileExist(false);
         setProfileStatic((prev) => ({
           ...prev,
           name: user?.data?.user?.name,
@@ -70,6 +71,9 @@ export default function profile() {
             user={user?.data?.user}
             profile={profile}
             setProfile={setProfile}
+            setProfileStatic={setProfileStatic}
+            profileExist={profileExist}
+            setEditMode={setEditMode}
           />
         ) : (
           <ProfileStatic profile={profileStatic} user={user} />
