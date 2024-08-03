@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { redirect } from "next/dist/server/api-utils";
+import ReviewModal from "./ReviewModal";
 
-export default function ProfileStatic({ profile, user }) {
+export default function ProfileStatic({ profile, user, viewMode }) {
   const fields = [
     "Location",
     "Phone No",
@@ -31,15 +32,18 @@ export default function ProfileStatic({ profile, user }) {
             <div className="flex items-center gap-4">
               <Avatar className="h-20 w-20">
                 <AvatarImage src={profile.profilePic} />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarFallback className="font-bold">
+                  {profile.name.slice(0, 1)}
+                </AvatarFallback>
               </Avatar>
               <div className="grid gap-0.5 leading-none">
                 <div className="font-semibold">{profile.name}</div>
-                <div className="text-sm text-muted-foreground">@johndoe</div>
+                {/* <div className="text-sm text-muted-foreground">@johndoe</div> */}
               </div>
             </div>
           </div>
         </div>
+        <ReviewModal />
       </header>
       <main className="flex-1 px-4 py-6 sm:px-6">
         <Card className="w-full max-w-2xl">

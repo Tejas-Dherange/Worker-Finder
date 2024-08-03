@@ -83,17 +83,35 @@ export default function ProfileEdit({
             <Label>Profile Picture</Label>
             <div className="flex items-center gap-4">
               <Avatar className="h-20 w-20">
-                <AvatarImage src="/placeholder-user.jpg" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarImage src={profile.profilePic} />
+                <AvatarFallback className="font-bold">
+                  {profile.name.slice(0, 1)}
+                </AvatarFallback>
               </Avatar>
               <div className="grid gap-0.5 leading-none">
-                <div className="font-semibold">John Doe</div>
-                <div className="text-sm text-muted-foreground">@johndoe</div>
+                <div className="font-semibold">{profile.name}</div>
+                {/* <div className="text-sm text-muted-foreground">@johndoe</div> */}
               </div>
 
               <CldUploadWidget
                 uploadPreset="workerFinder"
+                options={{
+                  sources: ["local", "url", "camera"],
+                  autoMinimize: false,
+                  cropping: true,
+                  croppingAspectRatio: 1,
+                  croppingValidateDimensions: true,
+                  multiple: false,
+                }}
                 onSuccess={(result) => {
+                  setProfile((prevState) => ({
+                    ...prevState,
+                    profilePic: result?.info?.url,
+                  }));
+                  setProfileStatic((prevState) => ({
+                    ...prevState,
+                    profilePic: result?.info?.url,
+                  }));
                   console.log(result.info.url);
                 }}
               >
@@ -101,7 +119,7 @@ export default function ProfileEdit({
                   return (
                     <Button variant="outline" onClick={() => open()}>
                       <UploadIcon className="h-4 w-4" />
-                      <span>Change</span>
+                      <span>Upload photo</span>
                     </Button>
                   );
                 }}

@@ -116,3 +116,14 @@ export async function searchProfileList(encodedProfession, encodedLocation) {
 
   return profiles;
 }
+
+// export async function updateProfilePic(profilePic){
+// await dbConnect()
+
+//  const updatedItem = await Profile.findByIdAndUpdate(
+//    id,
+//    { $set: { description } },
+//    { new: true } // Return the updated document
+//  );
+
+// }
