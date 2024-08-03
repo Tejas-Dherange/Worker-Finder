@@ -25,27 +25,25 @@ import { useState } from "react";
 
 export default function ReviewModal() {
   const [open, setOpen] = useState(false);
+  const [reviewObject, setReviewObject] = useState({
+    reviewedProfileId: "", // into string
+    review: "",
+  });
   const router = useRouter();
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setReviewObject((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="ml-6">
-          {" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-            />
-          </svg>
+          Give review
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -58,11 +56,14 @@ export default function ReviewModal() {
         <CardContent className="grid gap-6">
           <div className="grid gap-2">
             <Textarea
+              id="review"
               placeholder="Share your review..."
               className="min-h-[120px]"
+              value={reviewObject.review}
+              onChange={handleChange}
             />
           </div>
-          <div className="grid grid-cols-5 items-center gap-2">
+          {/* <div className="grid grid-cols-5 items-center gap-2">
             <Label htmlFor="rating" className="col-span-2 text-sm">
               Rating:
             </Label>
@@ -73,10 +74,12 @@ export default function ReviewModal() {
               <StarIcon className="h-6 w-6 fill-muted stroke-muted-foreground" />
               <StarIcon className="h-6 w-6 fill-muted stroke-muted-foreground" />
             </div>
-          </div>
+          </div> */}
         </CardContent>
         <CardFooter className="flex justify-end gap-2">
-          <Button variant="ghost">Cancel</Button>
+          <Button variant="ghost" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
           <Button>Submit Review</Button>
         </CardFooter>
       </DialogContent>

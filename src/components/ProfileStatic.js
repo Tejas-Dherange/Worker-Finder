@@ -43,7 +43,6 @@ export default function ProfileStatic({ profile, user, viewMode }) {
             </div>
           </div>
         </div>
-        <ReviewModal />
       </header>
       <main className="flex-1 px-4 py-6 sm:px-6">
         <Card className="w-full max-w-2xl">
@@ -86,6 +85,9 @@ export default function ProfileStatic({ profile, user, viewMode }) {
               })}
             </div>
           </CardContent>
+          <CardFooter>
+            <ReviewModal />
+          </CardFooter>
         </Card>
       </main>
     </>

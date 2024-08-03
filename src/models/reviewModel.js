@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
   {
-    reviewOwnerId: {
+    reviewOwnerEmail: {
       type: String,
       required: true,
     },
