@@ -32,21 +32,6 @@ export default function SideBar() {
           >
             Profile
           </Link>
-
-          <Link
-            href="#"
-            className="flex w-full items-center py-2 text-lg font-semibold"
-            prefetch={false}
-          >
-            About
-          </Link>
-          <Link
-            href="#"
-            className="flex w-full items-center py-2 text-lg font-semibold"
-            prefetch={false}
-          >
-            Contact
-          </Link>
         </div>
       </SheetContent>
     </Sheet>

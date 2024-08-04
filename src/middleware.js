@@ -12,7 +12,7 @@ export async function middleware(request) {
     path === "/login" ||
     path === "/listing";
   const isAuthPath = path === "/register" || path === "/login";
-  const isProtectedPath = path === "/profile";
+  const isProtectedPath = path === "/profile" || path === "/account";
 
   // const token = request.cookies.get("token")?.value || "";
   const token = await getToken({ req: request, secret });
@@ -29,5 +29,5 @@ export async function middleware(request) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/", "/profile", "/register", "/login", "/listing"],
+  matcher: ["/", "/profile", "/register", "/login", "/listing", "/account"],
 };

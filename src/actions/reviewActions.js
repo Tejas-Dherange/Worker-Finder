@@ -12,6 +12,11 @@ export async function createReview(reviewData) {
     return null;
   }
 
+  // Validate reviewedProfileId as ObjectId
+  if (!mongoose.Types.ObjectId.isValid(reviewData.reviewedProfileId)) {
+    throw new Error("Invalid reviewedProfileId");
+  }
+
   const reviewWithOwnerEmail = {
     ...reviewData,
     reviewOwnerEmail: session?.user?.email,
@@ -21,7 +26,7 @@ export async function createReview(reviewData) {
   await newReview.save();
 
   // Retrieve the saved profile using a query and lean()
-  const result = await newReview.findById(newReview._id).lean();
+  const result = await Review.findById(newReview._id).lean();
   return result;
 }
 

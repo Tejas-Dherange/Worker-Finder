@@ -63,7 +63,11 @@ export default function profile() {
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40 mx-auto max-w-[800px] mt-5 relative">
         <div className="self-end relative top-3 m-4">
-          <ToggleButton isChecked={editMode} setIsChecked={setEditMode} />
+          <ToggleButton
+            isChecked={editMode}
+            setIsChecked={setEditMode}
+            name={"Edit Mode"}
+          />
         </div>
 
         {editMode ? (

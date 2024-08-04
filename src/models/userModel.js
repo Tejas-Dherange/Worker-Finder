@@ -1,3 +1,4 @@
+"use server";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -8,6 +9,7 @@ const userSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
+    default: "worker",
   },
   avatarURI: {
     type: String,

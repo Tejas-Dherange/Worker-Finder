@@ -1,9 +1,7 @@
-import React from "react";
-import { Avatar, AvatarImage, AvatarFallback } from "./Avatar"; // Adjust import based on your setup
-import { Button } from "./Button"; // Adjust import based on your setup
-import { HeartIcon } from "./Icons"; // Adjust import based on your setup
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 
-const ReviewCard = ({ avatarFallback, name, date, reviewText }) => (
+const ReviewCard = ({ avatarFallback, name, reviewText }) => (
   <div className="bg-background rounded-lg p-6 shadow-sm">
     <div className="flex items-start justify-between">
       <div className="flex items-center gap-4">
@@ -16,7 +14,7 @@ const ReviewCard = ({ avatarFallback, name, date, reviewText }) => (
         </Avatar>
         <div>
           <h4 className="font-medium">{name}</h4>
-          <p className="text-sm text-muted-foreground">{date}</p>
+          {/* <p className="text-sm text-muted-foreground">{date}</p> */}
         </div>
       </div>
       <Button variant="ghost" size="icon">

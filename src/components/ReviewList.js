@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import ReviewCard from "./ReviewCard";
 
 export default function ReviewList() {
   const [showReview, setShowReview] = useState(true);
@@ -35,10 +36,14 @@ export default function ReviewList() {
   ];
   return (
     <>
-      <p>hls</p>
-      <Button onClick={() => setShowReview((prev) => !prev)}>
-        {/* {showReview ? "Hide review" : "Show review"} */}hfff
-      </Button>
+      <div className="w-full max-w-2xl mx-auto space-y-6 mt-3">
+        <Button
+          variant="outline"
+          onClick={() => setShowReview((prev) => !prev)}
+        >
+          {showReview ? "Hide review" : "Show review"}
+        </Button>
+      </div>
       {showReview && (
         <div className="w-full max-w-2xl mx-auto space-y-6">
           <div className="flex flex-col gap-6">

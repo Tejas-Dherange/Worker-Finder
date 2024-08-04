@@ -85,9 +85,11 @@ export default function ProfileStatic({ profile, user, viewMode }) {
               })}
             </div>
           </CardContent>
-          <CardFooter>
-            <ReviewModal />
-          </CardFooter>
+          {viewMode && (
+            <CardFooter>
+              <ReviewModal profileId={profile?._id} />
+            </CardFooter>
+          )}
         </Card>
       </main>
     </>

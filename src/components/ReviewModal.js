@@ -22,14 +22,26 @@ import {
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { createReview } from "@/actions/reviewActions";
 
-export default function ReviewModal() {
+export default function ReviewModal({ profileId }) {
+  const strProfileId = profileId ? profileId.toString() : ""; // Validate profileId
   const [open, setOpen] = useState(false);
   const [reviewObject, setReviewObject] = useState({
-    reviewedProfileId: "", // into string
+    reviewedProfileId: strProfileId,
     review: "",
   });
+  console.log(strProfileId);
   const router = useRouter();
+
+  async function onSubmit() {
+    if (!strProfileId) {
+      console.error("Invalid profile ID");
+      return;
+    }
+    const res = await createReview(reviewObject);
+    console.log(res);
+  }
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -80,7 +92,7 @@ export default function ReviewModal() {
           <Button variant="ghost" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button>Submit Review</Button>
+          <Button onClick={onSubmit}>Submit Review</Button>
         </CardFooter>
       </DialogContent>
     </Dialog>

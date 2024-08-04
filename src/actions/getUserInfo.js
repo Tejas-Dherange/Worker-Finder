@@ -18,6 +18,23 @@ export async function getUserInfo() {
   return userDoc;
 }
 
+export async function updateUserType(userType) {
+  await dbConnect();
+  const session = await getServerSession(authOptions);
+  console.log(session);
+
+  if (!session) {
+    return null;
+  }
+
+  const updatedUser = await User.findOneAndUpdate(
+    { email: session?.user?.email },
+    { $set: { userType } },
+    { new: true } // Return the updated document
+  ).lean();
+  return updatedUser;
+}
+
 //    const { username, email, password } = await request.json();
 
 //    const user = await User.findOne({ email });
