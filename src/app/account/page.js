@@ -10,7 +10,13 @@ export default function Component() {
   const router = useRouter();
   async function onSubmit() {
     await updateUserType(userType);
-    router.push("/");
+    if (userType=='worker') {
+      
+      router.push("/profile");
+    }else{
+      
+      router.push("/");
+    }
   }
   return (
     <div className="flex items-center justify-center h-screen">

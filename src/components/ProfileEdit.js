@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { getUserInfo } from "@/actions/getUserInfo";
 import { createProfile, updateProfile } from "@/actions/profileActions";
 import ProfileEditInputs from "./ProfileEditInputs";
+import Link from "next/link";
 
 export default function ProfileEdit({
   user,
@@ -33,12 +34,12 @@ export default function ProfileEdit({
   async function saveChanges() {
     if (profileExist) {
       const profileInfo = await updateProfile(profile);
-      console.log(profileInfo);
+      // console.log(profileInfo);
       setProfileStatic(profileInfo);
       setEditMode(false);
     } else {
       const profileInfo = await createProfile(profile);
-      console.log(profileInfo);
+      // console.log(profileInfo);
       setProfileStatic(profileInfo);
       setEditMode(false);
     }
@@ -64,10 +65,7 @@ export default function ProfileEdit({
     { id: "location", placeholder: "Enter your location" },
     { id: "phoneNo", placeholder: "Enter your phone number" },
     { id: "whatsApp", placeholder: "Enter your WhatsApp" },
-    { id: "facebook", placeholder: "Enter your Facebook" },
     { id: "email", placeholder: "Enter your Email" },
-    { id: "twitter", placeholder: "Enter your Twitter handle" },
-    { id: "linkedin", placeholder: "Enter your LinkedIn profile" },
   ];
 
   const handleSubmit = () => {
@@ -94,7 +92,7 @@ export default function ProfileEdit({
               </div>
 
               <CldUploadWidget
-                uploadPreset="workerFinder"
+                uploadPreset="new-preset"
                 options={{
                   sources: ["local", "url", "camera"],
                   autoMinimize: false,

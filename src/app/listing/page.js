@@ -1,4 +1,5 @@
 import ProfileCard from "@/components/ProfileCard";
+import { Button } from "@/components/ui/button";
 
 export default function page() {
   const profiles = [
@@ -55,8 +56,8 @@ export default function page() {
     <section className="container px-4 md:px-6 py-12 md:py-16">
       <div className="grid gap-8">
         <div className="flex items-center justify-between">
-          {/* <h1 className="text-3xl font-bold tracking-tight">Professionals</h1> */}
-          {/* <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-bold tracking-tight">Professionals</h1>
+          <div className="flex items-center gap-2">
             <Button variant="outline" size="sm">
               <FilterIcon className="w-4 h-4" />
               Filter
@@ -65,7 +66,7 @@ export default function page() {
               <ListOrderedIcon className="w-4 h-4" />
               Sort
             </Button>
-          </div> */}
+          </div>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {profiles.map((profile, index) => (

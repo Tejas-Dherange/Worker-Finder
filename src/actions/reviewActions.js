@@ -2,7 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import dbConnect from "@/dbConfig/dbConfig";
 import Review from "@/models/reviewModel";
 import { getServerSession } from "next-auth";
-
+import mongoose from "mongoose";
 export async function createReview(reviewData) {
   await dbConnect();
 

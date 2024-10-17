@@ -13,23 +13,24 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import SearchModal from "./SearchModal";
 import SideBar from "./SideBar";
 import { DropdownMenuNav } from "./DropdownMenuNav";
+import { Button } from "./ui/button";
 
 export default async function Navbar() {
   const session = await getServerSession(authOptions);
   // console.log(session);
   return (
     <>
-      <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
+      <header className="flex z-50 h-16 stickytop-0 w-full shrink-0 items-center px-4 md:px-6 dark:bg-black/30 backdrop-blur-lg  bg-green-500 ">
         <Link href="#" className="mr-6 hidden lg:flex" prefetch={false}>
-          <MountainIcon className="h-6 w-6" />
+          <MountainIcon className="h-8 w-8  text-white" />
           <span className="sr-only">Acme Inc</span>
         </Link>
-        <NavigationMenu className="hidden lg:flex">
+        <NavigationMenu className="hidden lg:flex ">
           <NavigationMenuList>
             <NavigationMenuLink asChild>
               <Link
                 href="/"
-                className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                className="group  inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-6 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                 prefetch={false}
               >
                 Home
@@ -38,7 +39,7 @@ export default async function Navbar() {
             <NavigationMenuLink asChild>
               <Link
                 href="/profile"
-                className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-6 ml-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                 prefetch={false}
               >
                 Profile
@@ -47,11 +48,22 @@ export default async function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
         <SideBar />
+        <Link
+                href="/StoreB"
+                className="group inline-flex h-9 w-max ml-2 items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                prefetch={false}
+              >
+                Store
+              </Link>
         <SearchModal />
+       
         <div className="ml-auto flex gap-5 items-center">
           {!!session && (
             <>
+            <Button className="dark:bg-black dark:text-white bg-slate-50 text-black hover:bg-slate-200">
+
               <Link href={"/account"}>{session?.user?.name}</Link>
+            </Button>
             </>
           )}
           <DropdownMenuNav />

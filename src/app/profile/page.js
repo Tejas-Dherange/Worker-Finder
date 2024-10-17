@@ -20,10 +20,7 @@ export default function profile() {
     location: "e.g: Jorpati",
     phoneNo: "",
     whatsApp: "",
-    facebook: "",
     email: "",
-    twitter: "e.g: @ram",
-    linkedin: "e.g: linkedin.com/in/ram",
   });
   const [profileStatic, setProfileStatic] = useState({
     name: "",
@@ -33,10 +30,7 @@ export default function profile() {
     location: "",
     phoneNo: "",
     whatsApp: "",
-    facebook: "",
     email: "",
-    twitter: "",
-    linkedin: "",
   });
 
   useEffect(() => {
@@ -80,7 +74,7 @@ export default function profile() {
             setEditMode={setEditMode}
           />
         ) : (
-          <ProfileStatic profile={profileStatic} user={user} />
+          <ProfileStatic  profile={profileStatic} user={user} />
         )}
       </div>
     </>

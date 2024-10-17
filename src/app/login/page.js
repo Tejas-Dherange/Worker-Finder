@@ -4,56 +4,67 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import SignInWithGoogle from "@/components/SignInWithGoogle";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
+  const [user, setUser] = useState({ email: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    return setUser((prevInfo) => ({ ...prevInfo, [name]: value }));
+    const target = event.target;
+    if (!target) return;
+    const { name, value } = target;
+    setUser((prevInfo) => ({ ...prevInfo, [name]: value }));
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setLoading(true);
+      await signIn("google", { callbackUrl: "/profile" });
+    } catch (error) {
+      setErrorMessage("Google sign-in failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (!user.email || !user.password) {
-        return;
-      }
-      //  const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
-      //  if (!emailRegex.test(user.email)) {
-      //    setError("invalid email id");
-      //    return;
-      //  }
+    if (!user.email || !user.password) {
+      setErrorMessage("Email and password are required.");
+      return;
+    }
 
+    setLoading(true);
+    setErrorMessage("");
+    try {
       const res = await signIn("credentials", {
         email: user.email,
         password: user.password,
-        redirect: true,
+        redirect: false,
       });
 
       if (res?.error) {
-        console.log(res);
+        setErrorMessage("Incorrect username or password.");
+      } else {
+        router.push("/profile");
       }
-      router.push("/profile");
     } catch (error) {
-      console.log(error);
+      console.error("Error signing in", error);
+      setErrorMessage("An unexpected error occurred.");
     } finally {
-      setUser({
-        email: "",
-        password: "",
-      });
+      setLoading(false);
+      setUser({ email: "", password: "" });
     }
   };
+
   return (
     <main>
-      <section className="w-full py-12 md:py-24 lg:py-32">
+      <section className="w-full py-12 md:py-24 lg:py-16">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -64,7 +75,8 @@ export default function page() {
                 Enter your email and password to sign in.
               </p>
             </div>
-            <Card className="w-full max-w-md">
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            <Card className="w-full max-w-md py-5">
               <CardContent className="space-y-4">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
@@ -89,11 +101,17 @@ export default function page() {
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col gap-4">
-                <Button className="w-full" onClick={handleSubmit}>
-                  Sign In
+                <Button className="w-full  bg-green-600 hover:bg-green-800" onClick={handleSubmit} disabled={loading}>
+                  {loading ? "Signing In..." : "Sign In"}
                 </Button>
-                <Button onClick={() => signIn("google")}>
-                  Sign In with Google
+                <Button
+                  onClick={handleGoogleSignIn}
+                  className="flex gap-24 justify-center  w-full  bg-blue-600 hover:bg-blue-800"
+                  disabled={loading}
+                >
+                  
+              <Image className={"bg-white ml-[-121px] rounded-sm "}  height={32} width={35} src={"/google.png"}/>
+                  Sign in with Google
                 </Button>
               </CardFooter>
             </Card>

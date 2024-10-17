@@ -12,28 +12,24 @@ import {
 import { Label } from "@/components/ui/label";
 import { redirect } from "next/dist/server/api-utils";
 import ReviewModal from "./ReviewModal";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function ProfileStatic({ profile, user, viewMode }) {
-  const fields = [
-    "Location",
-    "Phone No",
-    "Whats App",
-    "Facebook",
-    "Email",
-    "Twitter",
-    "LinkedIn",
-  ];
+  const fields = ["Location", "Phone No", "WhatsApp", "Email"];
   return (
     <>
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 pt-4">
-        <div className="grid gap-4">
+      
+      <header className="sticky top-0 z-30  flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 pt-4">
+        <div className="grid gap-4 " >
           <div className="grid gap-2">
             <Label>Profile Picture</Label>
             <div className="flex items-center gap-4">
               <Avatar className="h-20 w-20">
                 <AvatarImage src={profile.profilePic} />
                 <AvatarFallback className="font-bold">
-                  {profile.name.slice(0, 1)}
+                  {profile.name?.slice(0, 1)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid gap-0.5 leading-none">
@@ -88,10 +84,21 @@ export default function ProfileStatic({ profile, user, viewMode }) {
           {viewMode && (
             <CardFooter>
               <ReviewModal profileId={profile?._id} />
+              <Button className="bg-green-500 ml-72 flex gap-3 hover:bg-green-600">
+                <Image className="invert" height={30} width={30} src={"/whatsapp.png"} />
+
+                <Link
+                  href={`https://wa.me/+91${profile?.whatsApp}`}
+                  target="_blank"
+                >
+                  Join WhatsApp
+                </Link>
+              </Button>
             </CardFooter>
           )}
         </Card>
       </main>
+      
     </>
   );
 }

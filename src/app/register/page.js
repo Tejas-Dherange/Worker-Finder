@@ -8,6 +8,7 @@ import SignInWithGoogle from "@/components/SignInWithGoogle";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
 export default function page() {
   const [user, setUser] = useState({
@@ -15,29 +16,51 @@ export default function page() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     return setUser((prevInfo) => ({ ...prevInfo, [name]: value }));
   };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      setLoading(true);
+      await signIn("google", { callbackUrl: "/profile" });
+    } catch (error) {
+      setErrorMessage("Google sign-in failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(user);
+    if (!user) {
+      console.error("User object is null");
+      return;
+    }
+
+    if (!user.name || !user.email || !user.password) {
+      console.error("One or more of the user fields is empty");
+      return;
+    }
+
     try {
-      if (!user.name || !user.email || !user.password) {
+      const res = await axios.post("/api/register", user);
+      if (res.status !== 200 && res.status !== 201) {
+        console.error("Failed to create user", res.data);
         return;
       }
 
-      const res = await axios.post("/api/register", user);
-      console.log(res.data);
-      if (res.status == 200 || res.status == 201) {
-        console.log("user added successfully");
-        router.push("/login");
-      }
+      console.log("user added successfully");
+      router.push("/login");
     } catch (error) {
-      console.log(error);
+      console.error("Failed to create user", error);
+      setErrorMessage("Something went wrong. Please try again later.");
     } finally {
       setUser({
         name: "",
@@ -49,7 +72,7 @@ export default function page() {
 
   return (
     <main>
-      <section className="w-full py-12 md:py-24 lg:py-32">
+      <section className="w-full  py-12 md:py-24 lg:py-16">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -60,7 +83,7 @@ export default function page() {
                 Enter your email and password to get started.
               </p>
             </div>
-            <Card className="w-full max-w-md">
+            <Card className="w-full max-w-md py-3 ">
               <CardContent className="space-y-4">
                 <div className="grid gap-2">
                   <Label htmlFor="name">Name</Label>
@@ -94,16 +117,22 @@ export default function page() {
                     onChange={handleInputChange}
                   />
                 </div>
+                {errorMessage && <div className="text-red-600">{errorMessage}</div>}
               </CardContent>
               <CardFooter className="flex flex-col gap-4">
-                <Button className="w-full" onClick={handleSubmit}>
+                <Button className="w-full  bg-green-600 hover:bg-green-800" onClick={handleSubmit}>
                   Sign Up
                 </Button>
                 {/* <Button className="mt-6 flex items-center justify-center w-64 bg-white text-black border border-gray-300"> */}
                 {/* <ChromeIcon className="w-5 h-5 mr-2" /> */}
 
-                <Button onClick={() => signIn("google")}>
-                  Sign In with Google
+                <Button
+                  onClick={handleGoogleSignIn}
+                  className="flex justify-center  w-full gap-24 bg-blue-600 hover:bg-blue-800"
+                  disabled={loading}
+                >
+                 <Image className={"bg-white ml-[-121px] rounded-sm "}  height={32} width={35} src={"/google.png"}/>
+                 Sign in with Google
                 </Button>
               </CardFooter>
             </Card>

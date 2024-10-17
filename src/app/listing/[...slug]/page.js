@@ -1,5 +1,7 @@
 import { searchProfileList } from "@/actions/profileActions";
 import ProfileCard from "@/components/ProfileCard";
+import { Button } from "@/components/ui/button";
+import { FilterIcon, ListOrderedIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -18,8 +20,8 @@ export default async function page({ params }) {
     <section className="container px-4 md:px-6 py-12 md:py-16">
       <div className="grid gap-8">
         <div className="flex items-center justify-between">
-          {/* <h1 className="text-3xl font-bold tracking-tight">Professionals</h1> */}
-          {/* <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-bold tracking-tight">Professionals</h1>
+          <div className="flex items-center gap-2">
             <Button variant="outline" size="sm">
               <FilterIcon className="w-4 h-4" />
               Filter
@@ -28,7 +30,7 @@ export default async function page({ params }) {
               <ListOrderedIcon className="w-4 h-4" />
               Sort
             </Button>
-          </div> */}
+          </div>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {profiles?.map((profile, index) => (

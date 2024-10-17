@@ -13,10 +13,10 @@ const profileSchema = new mongoose.Schema({
 
   rating: { type: Number },
   profilePic: String,
-  facebook: String,
+  // facebook: String,
   whatsApp: String,
-  twitter: String,
-  linkedIn: String,
+  // twitter: String,
+  // linkedIn: String,
   website: String,
   email: { type: String },
   isWorking: { type: Boolean, default: false },
